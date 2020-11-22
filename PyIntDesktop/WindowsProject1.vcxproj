@@ -140,20 +140,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="About\About.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="MainWindow\MainWindow.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="TextBox\TextBox.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="About\About.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainWindow\MainWindow.cpp" />
+    <ClCompile Include="TextBox\TextBox.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="WindowsProject1.rc" />
+    <ResourceCompile Include="PyIntDesktop.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico" />
-    <Image Include="WindowsProject1.ico" />
+    <Image Include="PyIntDesktop.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
