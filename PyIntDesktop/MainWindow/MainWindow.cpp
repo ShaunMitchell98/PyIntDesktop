@@ -1,16 +1,26 @@
 #include "MainWindow.h"
 #include "../About/About.h"
 #include "../Resource.h"
+#include <windowsx.h>
 #include "../TextBox/TextBox.h"
+#include "../Button/Button.h"
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
-    case WM_CREATE:
-        TextBox textBox;
-        textBox.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd);
+    case WM_CREATE: {
+        CREATESTRUCT* cs = (CREATESTRUCT*)lParam;
+        MainWindow* mainWindow = (MainWindow*)cs->lpCreateParams;
+        mainWindow->SetUpChildWindows(hWnd);
+        SetLastError(0);
+        if (SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)mainWindow) == 0) {
+            if (GetLastError() != 0) {
+                return FALSE;
+            }
+        }
         return 0;
+    }
     case WM_COMMAND:
     {
         int wmId = LOWORD(wParam);
@@ -23,18 +33,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         case IDM_EXIT:
             DestroyWindow(hWnd);
             break;
+        case BN_CLICKED: {
+            MainWindow* mainWindow = (MainWindow*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+            mainWindow->SubmitCode();
+            break;
+        }
         default:
             return DefWindowProc(hWnd, message, wParam, lParam);
         }
+        break;
     }
-    break;
-    case WM_PAINT:
-    {
-        PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hWnd, &ps);
-        EndPaint(hWnd, &ps);
-    }
-    break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
@@ -47,6 +55,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 MainWindow::MainWindow(HINSTANCE hInstance) 
 {
     _hInstance = hInstance;
+    _hWndTextBox = NULL;
+    _hWndButton = NULL;
 }
 
 ATOM MainWindow::RegisterWindowClass(HINSTANCE hInstance, WCHAR* szWindowClass)
@@ -73,7 +83,7 @@ ATOM MainWindow::RegisterWindowClass(HINSTANCE hInstance, WCHAR* szWindowClass)
 BOOL MainWindow::InitWindow(HINSTANCE hInstance, int nCmdShow, WCHAR* szWindowClass, WCHAR* szTitle)
 {
     HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, this);
 
     if (!hWnd) {
         return FALSE;
@@ -83,4 +93,19 @@ BOOL MainWindow::InitWindow(HINSTANCE hInstance, int nCmdShow, WCHAR* szWindowCl
     UpdateWindow(hWnd);
 
     return TRUE;
+}
+
+void MainWindow::SetUpChildWindows(HWND hWnd) {
+    TextBox textBox;
+    Button button;
+    _hWndTextBox = textBox.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd);
+    _hWndButton = button.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd);
+}
+
+void MainWindow::SubmitCode() {
+    LPTSTR code = (LPTSTR)malloc(25);
+
+    if (code != NULL) {
+        Edit_GetText(_hWndTextBox, code, 12);
+    }
 }

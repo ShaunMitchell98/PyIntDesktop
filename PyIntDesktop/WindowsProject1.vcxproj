@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="About\About.h" />
+    <ClInclude Include="Button\Button.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainWindow\MainWindow.h" />
     <ClInclude Include="Resource.h" />
@@ -150,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="About\About.cpp" />
+    <ClCompile Include="Button\Button.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow\MainWindow.cpp" />
     <ClCompile Include="TextBox\TextBox.cpp" />
