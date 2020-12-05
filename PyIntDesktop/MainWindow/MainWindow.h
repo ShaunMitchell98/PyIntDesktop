@@ -5,7 +5,8 @@
 class MainWindow
 {
     HINSTANCE _hInstance;
-    HWND _hWndTextBox;
+    HWND _hWndInputTextBox;
+    HWND _hWndOutputTextBox;
     HWND _hWndButton;
 
 public:
@@ -13,7 +14,7 @@ public:
     ATOM RegisterWindowClass(HINSTANCE hInstance, WCHAR* szWindowClass);
     BOOL InitWindow(HINSTANCE hInstance, int nCmdShow, WCHAR* szWindowClass, WCHAR* szTitle);
     void SetUpChildWindows(HWND hWnd);
-    void SubmitCode();
+    void InterpretCode();
 
 private:
 

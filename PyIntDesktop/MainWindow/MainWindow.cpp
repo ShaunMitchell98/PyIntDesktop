@@ -4,6 +4,7 @@
 #include <windowsx.h>
 #include "../TextBox/TextBox.h"
 #include "../Button/Button.h"
+#include "../Interpreter/Interpreter.h"
 
 static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -27,21 +28,25 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
         // Parse the menu selections:
         switch (wmId)
         {
-        case IDM_ABOUT:
-            DialogBox((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-            break;
-        case IDM_EXIT:
-            DestroyWindow(hWnd);
-            break;
-        case BN_CLICKED: {
-            MainWindow* mainWindow = (MainWindow*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
-            mainWindow->SubmitCode();
-            break;
+            case IDM_ABOUT:
+                DialogBox((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+                return 0;
+            case IDM_EXIT:
+                DestroyWindow(hWnd);
+                return 0;
         }
-        default:
-            return DefWindowProc(hWnd, message, wParam, lParam);
+
+        wmId = HIWORD(wParam);
+        switch (wmId)
+        {
+            case BN_CLICKED: {
+                MainWindow* mainWindow = (MainWindow*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+                mainWindow->InterpretCode();
+                return 0;
+            }
+            default:
+                return DefWindowProc(hWnd, message, wParam, lParam);
         }
-        break;
     }
     case WM_DESTROY:
         PostQuitMessage(0);
@@ -55,7 +60,8 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 MainWindow::MainWindow(HINSTANCE hInstance) 
 {
     _hInstance = hInstance;
-    _hWndTextBox = NULL;
+    _hWndInputTextBox = NULL;
+    _hWndOutputTextBox = NULL;
     _hWndButton = NULL;
 }
 
@@ -98,14 +104,23 @@ BOOL MainWindow::InitWindow(HINSTANCE hInstance, int nCmdShow, WCHAR* szWindowCl
 void MainWindow::SetUpChildWindows(HWND hWnd) {
     TextBox textBox;
     Button button;
-    _hWndTextBox = textBox.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd);
+    _hWndInputTextBox = textBox.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd, 0, 0);
+    _hWndOutputTextBox = textBox.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd, 0, 200);
     _hWndButton = button.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd);
 }
 
-void MainWindow::SubmitCode() {
-    LPTSTR code = (LPTSTR)malloc(25);
+void MainWindow::InterpretCode() 
+{
+    LPTSTR input = (LPTSTR)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, 25);
 
-    if (code != NULL) {
-        Edit_GetText(_hWndTextBox, code, 12);
+    if (input != NULL) {
+        GetWindowText(_hWndInputTextBox, input, 12);
+
+        Interpreter interpreter;
+        LPWSTR output = interpreter.Interpret(input);
+        SetWindowText(_hWndOutputTextBox, output);
     }
+
+    HeapFree(GetProcessHeap(), 0, input);
 }
+
