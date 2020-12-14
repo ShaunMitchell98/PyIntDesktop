@@ -104,17 +104,18 @@ BOOL MainWindow::InitWindow(HINSTANCE hInstance, int nCmdShow, WCHAR* szWindowCl
 void MainWindow::SetUpChildWindows(HWND hWnd) {
     TextBox textBox;
     Button button;
-    _hWndInputTextBox = textBox.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd, 0, 0);
-    _hWndOutputTextBox = textBox.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd, 0, 200);
+    _hWndInputTextBox = textBox.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd, 0, 0, 500);
+    _hWndOutputTextBox = textBox.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd, 0, 600, 100);
     _hWndButton = button.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd);
 }
 
 void MainWindow::InterpretCode() 
 {
-    LPTSTR input = (LPTSTR)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, 25);
+    int textLength = GetWindowTextLength(_hWndInputTextBox);
+    LPTSTR input = (LPTSTR)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, textLength*2);
 
     if (input != NULL) {
-        GetWindowText(_hWndInputTextBox, input, 12);
+        GetWindowText(_hWndInputTextBox, input, textLength + 1);
 
         Interpreter interpreter;
         LPWSTR output = interpreter.Interpret(input);
