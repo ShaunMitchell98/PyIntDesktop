@@ -5,6 +5,8 @@
 #include "../TextBox/TextBox.h"
 #include "../Button/Button.h"
 #include "../Interpreter/Interpreter.h"
+#include "../FileOpener/FileOpener.h"
+#include "../CharConverter/CharConverter.h"
 
 static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -28,6 +30,12 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
         // Parse the menu selections:
         switch (wmId)
         {
+            case ID_OPEN_FILE:
+            {
+                MainWindow* mainWindow = (MainWindow*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+                mainWindow->OpenFile();
+                return 0;
+            }
             case IDM_ABOUT:
                 DialogBox((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 return 0;
@@ -88,8 +96,9 @@ ATOM MainWindow::RegisterWindowClass(HINSTANCE hInstance, WCHAR* szWindowClass)
 
 BOOL MainWindow::InitWindow(HINSTANCE hInstance, int nCmdShow, WCHAR* szWindowClass, WCHAR* szTitle)
 {
+    HMENU hMenu = LoadMenu(hInstance, L"IDC_WINDOWSPROJECT1");
     HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, this);
+        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, hMenu, hInstance, this);
 
     if (!hWnd) {
         return FALSE;
@@ -101,12 +110,21 @@ BOOL MainWindow::InitWindow(HINSTANCE hInstance, int nCmdShow, WCHAR* szWindowCl
     return TRUE;
 }
 
-void MainWindow::SetUpChildWindows(HWND hWnd) {
+void MainWindow::SetUpChildWindows( HWND hWnd) {
     TextBox textBox;
     Button button;
     _hWndInputTextBox = textBox.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd, 0, 0, 500);
     _hWndOutputTextBox = textBox.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd, 0, 600, 100);
     _hWndButton = button.InitWindow((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), hWnd);
+}
+
+void MainWindow::OpenFile()
+{
+    FileOpener fileOpener;
+    char* fileText = fileOpener.OpenFile();
+    CharConverter charConverter;
+    LPWSTR lpwstrText = charConverter.CharPointerToLpwstr(fileText, CP_UTF8);
+    SetWindowText(_hWndInputTextBox, lpwstrText);
 }
 
 void MainWindow::InterpretCode() 

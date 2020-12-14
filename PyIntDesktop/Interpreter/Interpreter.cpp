@@ -1,13 +1,9 @@
 #include "Interpreter.h"
+#include "../CharConverter/CharConverter.h"
 
 extern "C" {
 #include <VMFunctions.h>
 }
-
-typedef struct {
-    LPTSTR input;
-    LPWSTR output;
-} InterpreterData;
 
 static Settings InitialiseTestSettings() {
     Settings settings;
@@ -28,41 +24,27 @@ static char* RunInterpreter(char* code)
     return settings.output.string;
 }
 
-static char* LptstrToCharPointer(const wchar_t* wstr, unsigned int codePage)
-{
-    int sizeNeeded = WideCharToMultiByte(codePage, 0, wstr, -1, NULL, 0, NULL, NULL);
-    char* encodedStr = new char[sizeNeeded];
-    WideCharToMultiByte(codePage, 0, wstr, -1, encodedStr, sizeNeeded, NULL, NULL);
-    return encodedStr;
-}
-
-static LPWSTR CharPointerToLpwstr(char* string, unsigned int codePage)
-{
-    LPWSTR text = (LPTSTR)malloc(25);
-    MultiByteToWideChar(codePage, 0, string, -1, text, 12);
-    return text;
-}
-
 static DWORD WINAPI InterpretInternal(LPVOID lpParam) 
 {
     InterpreterData* interpreterData = (InterpreterData*)lpParam;
-    char* codeChar = LptstrToCharPointer(interpreterData->input, CP_UTF8);
+    CharConverter charConverter;
+    char* codeChar = charConverter.LptstrToCharPointer(interpreterData->input, CP_UTF8);
     char* output = RunInterpreter(codeChar);
-    interpreterData->output = CharPointerToLpwstr(output, CP_UTF8);
+    interpreterData->output = charConverter.CharPointerToLpwstr(output, CP_UTF8);
     return 0;
 }
 
 LPWSTR Interpreter::Interpret(LPTSTR input)
 {
-    InterpreterData* interpreterData = (InterpreterData*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(InterpreterData));
+    _interpreterData = (InterpreterData*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(InterpreterData));
 
-    if (interpreterData == NULL) {
+    if (_interpreterData == NULL) {
         ExitProcess(3);
     }
 
-    interpreterData->input = input;
+    _interpreterData->input = input;
 
-    HANDLE hThread = CreateThread(NULL, 0, InterpretInternal, interpreterData, 0, NULL);
+    HANDLE hThread = CreateThread(NULL, 0, InterpretInternal, _interpreterData, 0, NULL);
 
     if (hThread == NULL) {
         ExitProcess(3);
@@ -70,7 +52,11 @@ LPWSTR Interpreter::Interpret(LPTSTR input)
 
     WaitForSingleObject(hThread, INFINITE);
     CloseHandle(hThread);
-    LPWSTR output = interpreterData->output;
-    HeapFree(GetProcessHeap(), 0, interpreterData);
-    return output;
+
+    return _interpreterData->output;
+}
+
+Interpreter::~Interpreter() {
+    HeapFree(GetProcessHeap(), 0, _interpreterData->output);
+    HeapFree(GetProcessHeap(), 0, _interpreterData);
 }

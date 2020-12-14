@@ -152,9 +152,11 @@
   <ItemGroup>
     <ClInclude Include="About\About.h" />
     <ClInclude Include="Button\Button.h" />
+    <ClInclude Include="CharConverter\CharConverter.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Interpreter\Interpreter.h" />
     <ClInclude Include="MainWindow\MainWindow.h" />
+    <ClInclude Include="FileOpener\FileOpener.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="main.h" />
@@ -163,9 +165,11 @@
   <ItemGroup>
     <ClCompile Include="About\About.cpp" />
     <ClCompile Include="Button\Button.cpp" />
+    <ClCompile Include="CharConverter\CharConverter.cpp" />
     <ClCompile Include="Interpreter\Interpreter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow\MainWindow.cpp" />
+    <ClCompile Include="FileOpener\FileOpener.cpp" />
     <ClCompile Include="TextBox\TextBox.cpp" />
   </ItemGroup>
   <ItemGroup>

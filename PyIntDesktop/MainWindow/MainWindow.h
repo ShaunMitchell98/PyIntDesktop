@@ -14,6 +14,7 @@ public:
     ATOM RegisterWindowClass(HINSTANCE hInstance, WCHAR* szWindowClass);
     BOOL InitWindow(HINSTANCE hInstance, int nCmdShow, WCHAR* szWindowClass, WCHAR* szTitle);
     void SetUpChildWindows(HWND hWnd);
+    void OpenFile();
     void InterpretCode();
 
 private:
