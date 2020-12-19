@@ -15,6 +15,7 @@ public:
     BOOL InitWindow(HINSTANCE hInstance, int nCmdShow, WCHAR* szWindowClass, WCHAR* szTitle);
     void SetUpChildWindows(HWND hWnd);
     void OpenFile();
+    void SaveFile();
     void InterpretCode();
 
 private:

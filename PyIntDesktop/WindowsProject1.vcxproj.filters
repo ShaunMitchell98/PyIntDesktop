@@ -42,10 +42,16 @@
     <ClInclude Include="Interpreter\Interpreter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileOpener\FileOpener.h">
+    <ClInclude Include="CharConverter\CharConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CharConverter\CharConverter.h">
+    <ClInclude Include="FileReader\FileReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileWriter\FileWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileHandler\FileHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -76,10 +82,16 @@
     <ClCompile Include="Interpreter\Interpreter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileOpener\FileOpener.cpp">
+    <ClCompile Include="CharConverter\CharConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CharConverter\CharConverter.cpp">
+    <ClCompile Include="FileReader\FileReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileWriter\FileWriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileHandler\FileHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

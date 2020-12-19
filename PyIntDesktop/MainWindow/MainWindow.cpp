@@ -5,7 +5,8 @@
 #include "../TextBox/TextBox.h"
 #include "../Button/Button.h"
 #include "../Interpreter/Interpreter.h"
-#include "../FileOpener/FileOpener.h"
+#include "../FileReader/FileReader.h"
+#include "../FileWriter/FileWriter.h"
 #include "../CharConverter/CharConverter.h"
 
 static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -35,6 +36,13 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                 MainWindow* mainWindow = (MainWindow*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
                 mainWindow->OpenFile();
                 return 0;
+            }
+            case ID_FILE_SAVE: 
+            {
+                MainWindow* mainWindow = (MainWindow*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+                mainWindow->SaveFile();
+                return 0;
+
             }
             case IDM_ABOUT:
                 DialogBox((HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
@@ -120,11 +128,27 @@ void MainWindow::SetUpChildWindows( HWND hWnd) {
 
 void MainWindow::OpenFile()
 {
-    FileOpener fileOpener;
-    char* fileText = fileOpener.OpenFile();
+    FileReader fileReader;
+    char* fileText = fileReader.ReadFile();
     CharConverter charConverter;
     LPWSTR lpwstrText = charConverter.CharPointerToLpwstr(fileText, CP_UTF8);
     SetWindowText(_hWndInputTextBox, lpwstrText);
+}
+
+void MainWindow::SaveFile()
+{
+    int textLength = GetWindowTextLength(_hWndInputTextBox);
+    LPTSTR input = (LPTSTR)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, textLength * 2);
+
+    if (input != NULL) {
+        GetWindowText(_hWndInputTextBox, input, textLength + 1);
+
+        CharConverter charConverter;
+        char* fileText = charConverter.LptstrToCharPointer(input, CP_UTF8);
+
+        FileWriter fileWriter;
+        fileWriter.WriteFile(fileText);
+    }
 }
 
 void MainWindow::InterpretCode() 
