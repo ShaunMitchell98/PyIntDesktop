@@ -10,16 +10,10 @@ void FileWriter::WriteFileInternal(PWSTR filePath, char* fileText)
 		MessageBox(NULL, L"Unable to open file", L"Error", MB_OK);
 	}
 
-	LARGE_INTEGER fileSize;
-
-	BOOL success = GetFileSizeEx(handle, &fileSize);
-
-	if (!success) {
-		return;
-	}
+	int textLength = strlen(fileText);
 
 	OVERLAPPED ol = { 0 };
-	success = WriteFileEx(handle, fileText, fileSize.LowPart, &ol, NULL);
+	BOOL success = WriteFileEx(handle, fileText, textLength, &ol, NULL);
 
 	CloseHandle(handle);
 
