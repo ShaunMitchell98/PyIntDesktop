@@ -132,6 +132,7 @@ void MainWindow::OpenFile()
     char* fileText = fileReader.ReadFile();
     CharConverter charConverter;
     LPWSTR lpwstrText = charConverter.CharPointerToLpwstr(fileText, CP_UTF8);
+    _filePath = fileReader.GetFilePath();
     SetWindowText(_hWndInputTextBox, lpwstrText);
 }
 
@@ -147,7 +148,8 @@ void MainWindow::SaveFile()
         char* fileText = charConverter.LptstrToCharPointer(input, CP_UTF8);
 
         FileWriter fileWriter;
-        fileWriter.WriteFile(fileText);
+        fileWriter.WriteFile(fileText, _filePath);
+        _filePath = fileWriter.GetFilePath();
     }
 }
 

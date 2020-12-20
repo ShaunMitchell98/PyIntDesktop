@@ -5,7 +5,11 @@
 class FileHandler
 {
 protected:
-	void GetFilePath(PWSTR* filePath);
+	PWSTR _filePath;
+	char* _fileText;
+	PWSTR RequestFilePath();
 	FileHandler();
+public:
+	PWSTR GetFilePath();
 };
 

@@ -5,11 +5,7 @@
 
 class FileWriter : public FileHandler
 {
-	PWSTR _filePath;
-
-private:
-	void WriteFileInternal(PWSTR filePath, char* fileText);
 public:
-	void WriteFile(char* fileText);
+	void WriteFile(char* fileText, PWSTR filePath);
 	~FileWriter();
 };

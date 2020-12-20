@@ -8,6 +8,7 @@ class MainWindow
     HWND _hWndInputTextBox;
     HWND _hWndOutputTextBox;
     HWND _hWndButton;
+    PWSTR _filePath;
 
 public:
     MainWindow(HINSTANCE hInstance);
@@ -17,7 +18,4 @@ public:
     void OpenFile();
     void SaveFile();
     void InterpretCode();
-
-private:
-
 };

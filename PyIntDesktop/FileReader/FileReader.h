@@ -5,9 +5,6 @@
 
 class FileReader : public FileHandler
 {
-	PWSTR _filePath;
-	char* _fileText;
-
 private:
     char* ReadFileInternal(PWSTR filePath);
 public:

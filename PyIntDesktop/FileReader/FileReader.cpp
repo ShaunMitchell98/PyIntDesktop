@@ -37,7 +37,7 @@ char* FileReader::ReadFileInternal(PWSTR filePath)
 
 char* FileReader::ReadFile()
 {
-	GetFilePath(&_filePath);
+	_filePath = RequestFilePath();
 	return ReadFileInternal(_filePath);
 }
 

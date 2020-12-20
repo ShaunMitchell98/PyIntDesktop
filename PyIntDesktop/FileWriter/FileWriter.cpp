@@ -1,7 +1,7 @@
 #include "FileWriter.h"
 #include <shobjidl.h>
 
-void FileWriter::WriteFileInternal(PWSTR filePath, char* fileText)
+static void WriteFileInternal(char* fileText, PWSTR filePath)
 {
 	HANDLE handle = CreateFile(filePath, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED, NULL);
 
@@ -23,14 +23,20 @@ void FileWriter::WriteFileInternal(PWSTR filePath, char* fileText)
 	}
 }
 
-void FileWriter::WriteFile(char* fileText)
+void FileWriter::WriteFile(char* fileText, PWSTR filePath) 
 {
-	GetFilePath(&_filePath);
-	return WriteFileInternal(_filePath, fileText);
+	if (filePath == NULL) 
+	{
+		_filePath = RequestFilePath();
+	}
+	else {
+		_filePath = filePath;
+	}
+
+	WriteFileInternal(fileText, _filePath);
 }
 
 FileWriter::~FileWriter()
 {
-	CoTaskMemFree(_filePath);
 	CoUninitialize();
 }

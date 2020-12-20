@@ -1,8 +1,10 @@
 #include "FileHandler.h"
 #include <shobjidl.h>
 
-void FileHandler::GetFilePath(PWSTR* filePath)
+PWSTR FileHandler::RequestFilePath()
 {
+	PWSTR filePath = NULL;
+
 	IFileOpenDialog* pFileOpenDialog;
 
 	HRESULT hResult = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL, IID_IFileOpenDialog, reinterpret_cast<void**>(&pFileOpenDialog));
@@ -19,16 +21,23 @@ void FileHandler::GetFilePath(PWSTR* filePath)
 
 			if (SUCCEEDED(hResult))
 			{
-				pShellItem->GetDisplayName(SIGDN_FILESYSPATH, filePath);
+				pShellItem->GetDisplayName(SIGDN_FILESYSPATH, &filePath);
 				pShellItem->Release();
 			}
 		}
 
 		pFileOpenDialog->Release();
 	}
+
+	return filePath;
 }
 
 FileHandler::FileHandler()
 {
 	CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+}
+
+PWSTR FileHandler::GetFilePath()
+{
+	return _filePath;
 }
