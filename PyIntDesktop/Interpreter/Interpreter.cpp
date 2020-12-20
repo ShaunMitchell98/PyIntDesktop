@@ -57,6 +57,5 @@ LPWSTR Interpreter::Interpret(LPTSTR input)
 }
 
 Interpreter::~Interpreter() {
-    HeapFree(GetProcessHeap(), 0, _interpreterData->output);
     HeapFree(GetProcessHeap(), 0, _interpreterData);
 }
