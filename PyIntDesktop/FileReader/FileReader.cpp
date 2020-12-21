@@ -20,7 +20,7 @@ char* FileReader::ReadFileInternal(PWSTR filePath)
 		return NULL;
 	}
 
-	_fileText = (char*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, fileSize.LowPart*2);
+	_fileText = (char*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, fileSize.LowPart);
 
 	OVERLAPPED ol = { 0 };
 	success = ReadFileEx(handle, _fileText, fileSize.LowPart, &ol, NULL);
