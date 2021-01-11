@@ -6,6 +6,7 @@
 #include "../../IO/FileWriter/FileWriter.h"
 #include "../../IO/FileReader/FileReader.h"
 #include "../../Infrastructure/CharConverter/CharConverter.h"
+#include <shobjidl.h>
 
 namespace UI 
 {
@@ -83,6 +84,11 @@ namespace UI
         _inputTextBox = NULL;
         _outputTextBox = NULL;
         _filePath = NULL;
+    }
+
+    MainWindow::~MainWindow() 
+    {
+        CoTaskMemFree(_filePath);
     }
 
     ATOM MainWindow::RegisterWindowClass(HINSTANCE hInstance, WCHAR* szWindowClass)

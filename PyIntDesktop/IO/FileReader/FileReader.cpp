@@ -45,7 +45,6 @@ namespace IO
 
 	FileReader::~FileReader()
 	{
-		CoTaskMemFree(_filePath);
 		CoUninitialize();
 		HeapFree(GetProcessHeap(), 0, _fileText);
 	}
