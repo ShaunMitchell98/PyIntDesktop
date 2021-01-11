@@ -27,31 +27,25 @@
     <ClInclude Include="main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MainWindow\MainWindow.h">
+    <ClInclude Include="IO\FileReader\FileReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TextBox\TextBox.h">
+    <ClInclude Include="IO\FileWriter\FileWriter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="About\About.h">
+    <ClInclude Include="UI\TextBox\TextBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Button\Button.h">
+    <ClInclude Include="UI\MainWindow\MainWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Interpreter\Interpreter.h">
+    <ClInclude Include="Infrastructure\Interpreter\Interpreter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CharConverter\CharConverter.h">
+    <ClInclude Include="Infrastructure\CharConverter\CharConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileReader\FileReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FileWriter\FileWriter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FileHandler\FileHandler.h">
+    <ClInclude Include="IO\FileHandler\FileHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -67,31 +61,25 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MainWindow\MainWindow.cpp">
+    <ClCompile Include="IO\FileReader\FileReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextBox\TextBox.cpp">
+    <ClCompile Include="IO\FileWriter\FileWriter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="About\About.cpp">
+    <ClCompile Include="UI\TextBox\TextBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Button\Button.cpp">
+    <ClCompile Include="UI\MainWindow\MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Interpreter\Interpreter.cpp">
+    <ClCompile Include="Infrastructure\Interpreter\Interpreter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CharConverter\CharConverter.cpp">
+    <ClCompile Include="Infrastructure\CharConverter\CharConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileReader\FileReader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FileWriter\FileWriter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FileHandler\FileHandler.cpp">
+    <ClCompile Include="IO\FileHandler\FileHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -2,7 +2,7 @@
 //
 
 #include "framework.h"
-#include "MainWindow/MainWindow.h"
+#include "UI/MainWindow/MainWindow.h"
 #include "main.h"
 
 #define MAX_LOADSTRING 100
@@ -19,7 +19,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_PYINT_DESKTOP, szWindowClass, MAX_LOADSTRING);
 
-    MainWindow* mainWindow = new MainWindow(hInstance);
+    UI::MainWindow* mainWindow = new UI::MainWindow(hInstance);
 
     mainWindow->RegisterWindowClass(hInstance, szWindowClass);
 

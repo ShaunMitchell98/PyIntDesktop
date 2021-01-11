@@ -867,11 +867,9 @@
 #define LANG_FULAH                      0x67
 #define LANG_PULAR                      0x67
 #define EALREADY                        103
-#define IDD_ABOUTBOX                    103
 #define VK_NUMPAD8                      0x68
 #define LANG_HAUSA                      0x68
 #define EBADMSG                         104
-#define IDM_ABOUT                       104
 #define IDM_EXIT                        105
 #define VK_NUMPAD9                      0x69
 #define ECANCELED                       105
@@ -1707,6 +1705,7 @@
 #define ID_FILE_OPEN                    32771
 #define ID_OPEN_FILE                    32772
 #define ID_FILE_SAVE                    32773
+#define ID_RUN                          32774
 #define SC_SIZE                         0xF000
 #define SC_SEPARATOR                    0xF00F
 #define SC_MOVE                         0xF010
@@ -1749,7 +1748,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        129
-#define _APS_NEXT_COMMAND_VALUE         32774
+#define _APS_NEXT_COMMAND_VALUE         32776
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

@@ -150,31 +150,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="About\About.h" />
-    <ClInclude Include="Button\Button.h" />
-    <ClInclude Include="CharConverter\CharConverter.h" />
-    <ClInclude Include="FileHandler\FileHandler.h" />
-    <ClInclude Include="FileWriter\FileWriter.h" />
+    <ClInclude Include="IO\FileHandler\FileHandler.h" />
+    <ClInclude Include="Infrastructure\CharConverter\CharConverter.h" />
+    <ClInclude Include="IO\FileWriter\FileWriter.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="Interpreter\Interpreter.h" />
-    <ClInclude Include="MainWindow\MainWindow.h" />
-    <ClInclude Include="FileReader\FileReader.h" />
+    <ClInclude Include="Infrastructure\Interpreter\Interpreter.h" />
+    <ClInclude Include="UI\MainWindow\MainWindow.h" />
+    <ClInclude Include="IO\FileReader\FileReader.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="TextBox\TextBox.h" />
+    <ClInclude Include="UI\TextBox\TextBox.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="About\About.cpp" />
-    <ClCompile Include="Button\Button.cpp" />
-    <ClCompile Include="CharConverter\CharConverter.cpp" />
-    <ClCompile Include="FileHandler\FileHandler.cpp" />
-    <ClCompile Include="FileWriter\FileWriter.cpp" />
-    <ClCompile Include="Interpreter\Interpreter.cpp" />
+    <ClCompile Include="IO\FileHandler\FileHandler.cpp" />
+    <ClCompile Include="Infrastructure\CharConverter\CharConverter.cpp" />
+    <ClCompile Include="IO\FileWriter\FileWriter.cpp" />
+    <ClCompile Include="Infrastructure\Interpreter\Interpreter.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainWindow\MainWindow.cpp" />
-    <ClCompile Include="FileReader\FileReader.cpp" />
-    <ClCompile Include="TextBox\TextBox.cpp" />
+    <ClCompile Include="UI\MainWindow\MainWindow.cpp" />
+    <ClCompile Include="IO\FileReader\FileReader.cpp" />
+    <ClCompile Include="UI\TextBox\TextBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PyIntDesktop.rc" />
